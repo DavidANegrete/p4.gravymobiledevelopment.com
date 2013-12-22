@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="/css/style.css" type="text/css">
 	<link href='http://fonts.googleapis.com/css?family=Press+Start+2P' rel='stylesheet' type='text/css'>
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
 
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />	
 					
@@ -43,6 +44,6 @@
 
 
 	<?php if(isset($client_files_body)) echo $client_files_body; ?>
-    <script src="../js/appointment-book.js" type="text/javascript"></script>
+
 </body>
 </html>

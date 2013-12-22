@@ -34,7 +34,7 @@ public function p_signup(){
 
 	 # Confirmation
 		#echo 'You\'re signed up';
-		Router::redirect("/users/profile");
+		Router::redirect("/users/login");
 
 
 
@@ -93,7 +93,7 @@ public function p_login(){
         		//echo "Logged IN";
         		setcookie("token", $token, strtotime('+1 year'), '/');
 
-        		Router::redirect("/users/profile");
+        		Router::redirect("/");
         }
  } #EO p_login
 
@@ -117,26 +117,6 @@ public function logout() {
 		Router::redirect("/");
 } #EO logout 
 
-public function profile($user_name = NULL) {
-
-	# If user is blank, they're not logged in; redirect them to the login page
-		if(!$this->user) {
-        //Router::redirect('/users/login');
-			Router::redirect("/");
-        }
-
-    # set up the view
-        $this->template->content = View::instance('v_users_profile');
-        
-       $this->template->title = "Profile";
-
-
-    #pass the data to the view
-        $this->template->content->user_name = $user_name;
-
-    #Display the view
-        echo $this->template;
-}#EO profile
 
 public function settings($error = NULL){
 
@@ -148,10 +128,15 @@ public function settings($error = NULL){
         //Define view parameters
         $this->template->content = View::instance('v_users_settings');
         $this->template->title   = "Settings";
-
         //Pass error variable to the view
         $this->template->content->error = $error;
 
+        $client_files_body = Array(
+            "/js/jquery.form.js",
+            "/js/p_settings_delete.js"
+        );
+
+        $this->template->client_files_body = Utils::load_client_files($client_files_body);
 
         //Display view
         echo $this->template;
@@ -164,35 +149,71 @@ public function settings($error = NULL){
 #function to process the delete
 public function p_settings_delete(){
 
+
     # Sanitize the user entered data to keep hackers out
     $_POST = DB::instance(DB_NAME)->sanitize($_POST);
 
-
+    # Hash submitted password to complete authentication
     $_POST['password'] = sha1(PASSWORD_SALT.$_POST['password']);
 
-    $q =  "SELECT token
-          FROM users
-          WHERE user_id = '".$this->user->user_id."'
-          AND password = '".$_POST['password']."'";
 
+    # Retrieve the token if it's available
+    $q = "SELECT token
+        FROM users
+        WHERE user_id = '".$this->user->user_id."'
+        AND password = '".$_POST['password']."'";
 
     $token = DB::instance(DB_NAME)->select_field($q);
 
-    if(!$token){
-        Router::redirect("/users/settings/?error");
+    if($token){
+        $view = View::instance('v_users_settings_confirm');
+        echo $view;
+    }
+    else{
+        $view = View::instance('v_users_settings');
+        //Pass error variable to the view
+        $_POST ['error'] = 'Password is wrong';
 
-    } else {
+        $view->error =  $_POST ['error'];
+
+
+        echo $view;
+
+    }
+}#EO p_Settings_delete
+
+public function p_settings_delete_delete(){
+
+    # Sanitize the user entered data to keep hackers out
+    $_POST = DB::instance(DB_NAME)->sanitize($_POST);
+
+    # Hash submitted password to complete authentication
+    $_POST['password'] = sha1(PASSWORD_SALT.$_POST['password']);
+
+    # Retrieve the token if it's available
+    $q = "SELECT token
+        FROM users
+        WHERE user_id = '".$this->user->user_id."'
+        AND password = '".$_POST['password']."'";
+
+    $token = DB::instance(DB_NAME)->select_field($q);
+
+    if($token){
 
         DB::instance(DB_NAME)->delete('users', "WHERE user_id = '".$this->user->user_id."'");
 
-        $this->template->content = View::instance('v_users_settings_confirm');
-        $this->template->title   = "Deleted";
+        $view = View::instance('v_users_settings_exit_message');
 
-        //Display view
-        echo $this->template;
+        echo $view;
+
+
+
 
     }
 
-}
-}#EOC
 
+}
+
+
+
+}#EOC

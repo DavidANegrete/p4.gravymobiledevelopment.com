@@ -34,8 +34,14 @@ class posts_controller extends base_controller {
         # Insert
         DB::instance(DB_NAME)->insert('posts', $_POST);
 
+        $view = new View('v_post_p_add');
+
+        $view->created = Time::display(Time::now());
+
+        echo $view;
+
         # Send back to the posts
-        Router::redirect("/posts/index");
+
     }#EO p_add
 
     public function index(){

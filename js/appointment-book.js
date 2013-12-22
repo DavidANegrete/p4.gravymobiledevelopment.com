@@ -189,9 +189,12 @@ $('input[name=service]').click(function() {
                 service = service + ' Manicure';
             }
 
+
+
         });
 
     }
+
 
 });
 
@@ -250,7 +253,7 @@ function displayTotal(){
         $('#book-it').prop("disabled", false);
     }
 
-    $('#time').html( '<br>Time needed' + ': <span>' + time + ' minutes </span><br><br>' );
+    $('#time').html('Time needed' + time);
 }
 
 /***
@@ -330,13 +333,53 @@ function displaySub(submenu){
 
 }
 
-
+var datepicked;
 //Eventually I will add athe abitlity for this to be booked using a db.
 $('#book-it').click(function() {
-    $('#info').html('Your appointment is booked!');
-    console.log('test');
+    $('#dateselect').html('<p>Date: <input type="text" id="datepicker"></p>');
+    $('#datepicker').datepicker();
+    $.ajax({
+        type: 'GET',
+        url: '/prices/book/',
+        data: 'cost=' + cost + '\u0026service='+ service + '\u0026time=' + time,
+        beforeSubmit: function() {
+            $('#results').html("Fetching...");
+
+        },
+        success: function(response){
+            var data = $.parseJSON(response);
+            $('#results').html('Service type: ' +'<span class = "bold">' + data['service'] + '</span>' + '<br>');
+            $('#results').append('Service time needed: ' + '<span class = "bold">' + data['time'] + ' minutes ' + '</span>'+'<br>');
+            $('#results').append('Total:  ' + '<span class = "bold">' + '$' +data['cost']   +'</span>' + '<br>');
+
+
+        }
+
+
+    });
+
+    $( "input" ).keyup(function() {
+
+           datepicked = $( this ).val();
+
+
+
+        })
+
+        .keyup();
+
+    console.log(datepicked);
+
+
+
+
+
+
+
+
 
 });
+
 
 
 

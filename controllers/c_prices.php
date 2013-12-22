@@ -20,11 +20,36 @@ class prices_controller extends base_controller {
 
         $this->template->title = "Prices";
 
+        $client_files_body = Array(
+            "/js/jquery.form.js",
+            "/js/appointment-book.js"
+        );
+
+        $this->template->client_files_body = Utils::load_client_files($client_files_body);
+
         # Render template
         echo $this->template;
 
     }
 
+    public function book(){
+
+        $data = Array();
+
+        $data['time']= $_GET['time'];
+        $data['service']= $_GET['service'];
+        $data['cost']= $_GET['cost'];
+
+
+
+        echo json_encode($data);
+
+
+
+
+
+
+    }
 
 
 
