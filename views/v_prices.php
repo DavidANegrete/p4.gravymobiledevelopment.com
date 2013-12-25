@@ -10,10 +10,11 @@
         <div id = 'extras'></div>
         <div id = 'sub-total'></div>
         <div id = 'time'></div>
+
     </div>
-    <div id='dateselect'></div>
-    <span>
-    </span>
+
+
+
     <span>
         <p id = 'info'>Select a service that you would like and add any extras to get a price and time estimate. You will eventually be able to use this app to
             schedule an appointment when done!</p>
@@ -21,9 +22,7 @@
     <button type="button" id = 'back' formaction="#">Back</button>
     <button type="button" id = 'select-service' disabled="disabled">Select</button>
     <button type="button" id = "book-it" disabled="disabled">Book-It</button>
-    <script>
-
-    </script>
+    <button type="button" id = "confirm-appt" disabled="disabled">Confirm It!</button>
 
 
 

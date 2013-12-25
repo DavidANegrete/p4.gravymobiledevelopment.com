@@ -6,6 +6,10 @@
 //declaring variables
 var cost=0;
 var time=0;
+var datepicked;
+var timepicked;
+var data;
+var extraCost = 0;
 var label;
 var extra_selected = false;
 var service;
@@ -61,7 +65,7 @@ var add_on_checkbox           = '<input type="checkbox" class = "add-on" name="a
  * displaying the main options
  ***/
 
-$('#head').html('<h1></h1>');
+$('#head').html('<h1>Select a service</h1>');
 $('#display').html(main_options);
 $('#book-now').html('');
 
@@ -244,16 +248,18 @@ function displayTotal(){
             $('#extras').append( '<p>' + extras_name[Math.floor(extras[i])] + ':<span> $' + extras_cost[Math.floor(extras[i])] + '</span></p>');
             time = time + extras_time[Math.floor(extras[i])];
             cost = cost + extras_cost[Math.floor(extras[i])];
+            extraCost = extraCost + extras_cost[Math.floor(extras[i])];
         }
 
         $('#sub-total').html( 'Service + Extras: ' + ' <span> $' + cost + '</span>' +'<br>');
+        $('#sub-total').append('<br>');
 
         //adding control to keep users from entering submit twice
         $('#select-service').prop("disabled", true);
         $('#book-it').prop("disabled", false);
     }
 
-    $('#time').html('Time needed' + time);
+    $('#time').html('Time needed ' + ' <span> ' + time +  ' minutes' + '</span>' );
 }
 
 /***
@@ -333,54 +339,61 @@ function displaySub(submenu){
 
 }
 
-var datepicked;
+
 //Eventually I will add athe abitlity for this to be booked using a db.
 $('#book-it').click(function() {
-    $('#dateselect').html('<p>Date: <input type="text" id="datepicker"></p>');
-    $('#datepicker').datepicker();
+
+
+
+
     $.ajax({
         type: 'GET',
         url: '/prices/book/',
-        data: 'cost=' + cost + '\u0026service='+ service + '\u0026time=' + time,
+
         beforeSubmit: function() {
             $('#results').html("Fetching...");
 
         },
-        success: function(response){
-            var data = $.parseJSON(response);
-            $('#results').html('Service type: ' +'<span class = "bold">' + data['service'] + '</span>' + '<br>');
-            $('#results').append('Service time needed: ' + '<span class = "bold">' + data['time'] + ' minutes ' + '</span>'+'<br>');
-            $('#results').append('Total:  ' + '<span class = "bold">' + '$' +data['cost']   +'</span>' + '<br>');
+        success: function(message){
+            $('#results').html(message);
 
 
         }
 
 
     });
-
-    $( "input" ).keyup(function() {
-
-           datepicked = $( this ).val();
-
-
-
-        })
-
-        .keyup();
-
-    console.log(datepicked);
-
-
-
-
-
-
-
-
-
 });
 
 
+$('#timesubmitform').click(function() {
+
+
+
+    $.ajax({
+        type: 'GET',
+        url: '/prices/p_book/',
+        data: 'cost=' + cost + '\u0026service='+ service + '\u0026apptime=' + time,
+        beforeSubmit: function() {
+            $('#results').html("Setting it up...");
+
+        },
+        success: function(message){
+            $('#results').html(message);
+
+
+        }
+
+
+    });
+});
+
+$('#go_home').click(function(){
+
+
+    window.location.href = '/';
+    window.locaton.reload(true)
+
+});
 
 
 

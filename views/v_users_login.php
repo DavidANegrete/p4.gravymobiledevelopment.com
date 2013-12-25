@@ -3,29 +3,26 @@
        
         <h1>Log In</h1>
         
-         <form method='POST' action='/users/p_login'>
+         <form method='POST' action='/users/p_login' id="loginform">
             <table>
-                    <th>
-                        <label for="email">Email</label>
-                    </th>
-                    <td>
-                        <input type='text' name='email' id = "email">
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        <label for="password">Password</label>
-                    </th>
-                    <td>
-                        <input type='password' name='password' id = "password">
-                    </td>
-                </tr>
-            </table>
-            <tr>
 
-            </tr>
+                        <label for="email">Email  </label>
+
+                        <input type='text' name='email' id = "email" required=>
+                <div></div>
+
+
+                        <label for="password">Password</label>
+
+                        <input type='password' name='password' id = "password" required>
+
+            </table>
+
             <input type='submit' value='Enter'>
         </form>
     </div>
+    <script>
+        $("#loginform").validate();
+    </script>
 
 

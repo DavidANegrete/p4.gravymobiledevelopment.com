@@ -1,0 +1,138 @@
+/*-------------------------------------------------------------------------------------------------
+General
+-------------------------------------------------------------------------------------------------*/
+* {
+    font-family:Helvetica, Arial, sans-serif;
+    color: #050403;
+}
+
+
+
+/*-------------------------------------------------------------------------------------------------
+Layout
+-------------------------------------------------------------------------------------------------*/
+.wrapper {
+    padding-top: 100px;
+    max-width: 600px;
+    margin: 0 auto;
+    background-image: url('../images/background.png');
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+
+
+}
+.options {
+
+    margin: 0 30px;
+
+}
+
+#head {
+
+    height: 60px;
+
+
+    font-weight: bold;
+    background-color: #fae624;
+    text-align: center;
+
+}
+
+#results{
+    border: 1px solid #050403;
+    background-color: #4FB69F;
+
+}
+span {
+    font-weight: bold;
+}
+#main-service, #extras, #sub-total, #time {
+    font-size: 25px;
+
+
+}
+
+
+#sub-head {
+    font-weight: bold;
+}
+
+#info{
+    font-size: 25px;
+}
+
+.display {
+    font-size: 30px;
+
+}
+
+.service-type:checked::before,
+input[type="radio"] {
+    position:absolute;
+    clip: rect(0,0,0,0);
+    clip: rect(0 0 0 0);
+}
+
+.service:checked,
+input[type="radio"] + label::before {
+    content: url('../images/checkbox.png');
+}
+
+input[type="radio"]:checked + label::before {
+    content: url('../images/checkbox-checked.png');
+}
+
+.service:checked::before,
+input[type="checkbox"] {
+    position:absolute;
+    clip: rect(0,0,0,0);
+    clip: rect(0 0 0 0);
+}
+
+.service:checked,
+input[type="checkbox"] + label::before {
+    content: url('../images/checkbox.png');
+}
+
+input[type="checkbox"]:checked + label::before {
+    content: url('../images/checkbox-checked.png');
+}
+
+button{
+
+    padding: 15px 30px;
+    margin: 40px 0;
+    color: #faf3bc;
+    background-color: #4fb69f;
+    /*background: #4fb69f url('img/texture.png') no-repeat right top;*/
+    border-radius: 25px;
+    -webkit-border-radius: 25px;
+    -moz-border-radius: 25px;
+    text-transform: uppercase;
+}
+
+button:hover{
+
+    background-color: #9bff9c;
+
+
+}
+button:hover{
+    color: black;
+}
+
+button:disabled{
+
+    background-color: #2b7262;
+
+}
+input[name=password] {
+    max-width: 100%;
+    margin: 0 auto;
+
+
+}
+#signupformlay{
+    padding-left: 250px;
+}
